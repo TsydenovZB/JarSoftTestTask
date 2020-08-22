@@ -42,7 +42,7 @@ public class CategoryController {
         }
     }
 
-    @DeleteMapping("{categoryId}")
+    @DeleteMapping("/{categoryId}")
     private ResponseEntity<String> deleteCategory(@PathVariable(value = "categoryId") Integer categoryId) {
         Category category = categoryRepo.findById(categoryId).get();
         List<Banner> banners = category.getBanners();

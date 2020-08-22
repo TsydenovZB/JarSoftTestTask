@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/category/categoryId/banner")
+@RequestMapping("/category/{categoryId}/banner")
 public class BannerController {
 
     @Autowired
@@ -21,7 +21,8 @@ public class BannerController {
     private CategoryRepo categoryRepo;
 
     @PostMapping
-    public ResponseEntity<String> addBanner(@RequestParam Map<String, String> banner) {
+    public ResponseEntity<String> addBanner(@PathVariable(value = "categoryId") Integer categoryId,
+                                            @RequestBody Map<String, String> banner) {
         if (categoryRepo.count() == 0) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("While no categories have been created, creating a banner is impossible");
         }
@@ -29,27 +30,29 @@ public class BannerController {
         String id = banner.get("id");
         String name = banner.get("name");
         String price = banner.get("price");
-        String category = banner.get("categoryId");
         String content = banner.get("content");
 
-        if (id.isEmpty() || name.isEmpty() || price.isEmpty() || category.isEmpty() || content.isEmpty()) {
+        if (name.isEmpty() || price.isEmpty() || content.isEmpty()) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Please fill in all fields");
         }
-
-        Banner existBanner = bannerRepo.findById(Integer.parseInt(id)).get();
-        if (bannerRepo.findByName(name) != null) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Banner with name '" + name + "' is already exist");
+        if (id!=null) {
+            Banner existBanner = bannerRepo.findById(Integer.parseInt(id)).get();
+            if (bannerRepo.findByName(name) != null) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Banner with name '" + name + "' is already exist");
+            }
+            existBanner.setName(name);
+            existBanner.setPrice(Double.parseDouble(price));
+            existBanner.setContent(content);
+            existBanner.setCategory(categoryRepo.findById(categoryId).get());
+            bannerRepo.save(existBanner);
         }
-        existBanner.setName(name);
-        existBanner.setPrice(Double.parseDouble(price));
-        existBanner.setContent(content);
-        bannerRepo.save(existBanner);
+        bannerRepo.save(new Banner(name, Double.parseDouble(price),categoryRepo.findById(categoryId).get(), content));
 
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 
-    @DeleteMapping
-    public ResponseEntity<String> deleteBanner(@RequestParam Integer bannerId) {
+    @DeleteMapping("/{bannerId}")
+    public ResponseEntity<String> deleteBanner(@PathVariable(value = "bannerId") Integer bannerId) {
         bannerRepo.deleteById(bannerId);
         return ResponseEntity.status(HttpStatus.OK).body("");
     }

@@ -10,7 +10,6 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "BANNER_TBL")
 public class Banner {
@@ -37,4 +36,11 @@ public class Banner {
     @JsonIgnore
     @OneToMany(mappedBy = "banner")
     private List<Request> requests;
+
+    public Banner(String name, double price, Category category, String content) {
+        this.name = name;
+        this.price = price;
+        this.category = category;
+        this.content = content;
+    }
 }

@@ -1,4 +1,4 @@
-create database jarsoft;
+create database if not exists jarsoft;
 
 use jarsoft;
 
