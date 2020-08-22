@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/category")
@@ -22,14 +23,16 @@ public class CategoryController {
     private CategoryRepo categoryRepo;
 
     @PostMapping
-    private ResponseEntity<String> addCategory(@RequestParam String name, @RequestParam String reqName) {
+    private ResponseEntity<String> addCategory(@RequestBody Map<String, String> category) {
+        String name = category.get("name");
+        String reqName = category.get("reqName");
         if (categoryRepo.findByName(name) == null) {
             if (categoryRepo.findByReqName(reqName) == null) {
-                Category category = new Category();
-                category.setName(name);
-                category.setReqName(reqName);
+                Category anotherCategory = new Category();
+                anotherCategory.setName(name);
+                anotherCategory.setReqName(reqName);
 
-                categoryRepo.save(category);
+                categoryRepo.save(anotherCategory);
                 return ResponseEntity.status(HttpStatus.OK).body("");
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Category with Request ID '" + reqName + "' is already exist");
@@ -39,8 +42,8 @@ public class CategoryController {
         }
     }
 
-    @DeleteMapping
-    private ResponseEntity<String> deleteCategory(@RequestParam Integer categoryId) {
+    @DeleteMapping("{categoryId}")
+    private ResponseEntity<String> deleteCategory(@PathVariable(value = "categoryId") Integer categoryId) {
         Category category = categoryRepo.findById(categoryId).get();
         List<Banner> banners = category.getBanners();
         if (!banners.isEmpty()) {

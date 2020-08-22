@@ -42,7 +42,6 @@ public class BannerController {
         }
         existBanner.setName(name);
         existBanner.setPrice(Double.parseDouble(price));
-        existBanner.setCategoryId(Integer.parseInt(category));
         existBanner.setContent(content);
         bannerRepo.save(existBanner);
 

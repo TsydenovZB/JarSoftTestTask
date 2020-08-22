@@ -27,7 +27,7 @@ public class Banner {
 
     @ManyToOne
     @JoinColumn(name = "CATEGORY_ID", nullable = false)
-    private int categoryId;
+    private Category category;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
