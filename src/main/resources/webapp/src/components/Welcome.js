@@ -8,8 +8,7 @@ class Welcome extends React.Component {
       <Jumbotron className="bg-dark text-white">
         <h1>Welcome to Advertising App</h1>
         <p>
-          This is a simple hero unit, a simple jumbotron-style component for calling
-          extra attention to featured content or information.
+          Java developer test assignment by Jarsoft
         </p>
       </Jumbotron>
     );

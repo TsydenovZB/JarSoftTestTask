@@ -28,7 +28,7 @@ public class Request {
     @Column(name = "user_agent", columnDefinition = "TEXT")
     private String userAgent;
 
-    @Column(name = "id_address", columnDefinition = "VARCHAR(255)")
+    @Column(name = "ipAddress", columnDefinition = "VARCHAR(255)")
     private String ipAddress;
 
     @Column(columnDefinition = "DATETIME")
