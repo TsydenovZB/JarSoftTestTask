@@ -45,10 +45,7 @@ public class RandomBannerService {
                     newRequest.setBanner(banner);
                     requestRepo.save(newRequest);
                     return ResponseEntity.status(HttpStatus.OK)
-                            .body("Banner id: " + banner.getId() + "\n" +
-                                    "Banner price: " + banner.getPrice() + "\n" +
-                                    "Banner category: " + banner.getCategory().getName() + "\n" +
-                                    "Banner content: " + banner.getContent());
+                            .body(banner.getContent());
                 }
             }
         }

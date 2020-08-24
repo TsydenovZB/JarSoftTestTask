@@ -11,6 +11,7 @@ class NavigationBar extends React.Component {
           <Nav className="mr-auto">
             <Link to={"/banner"} className="nav-link">Banners</Link>
             <Link to={"/category"} className="nav-link">Categories</Link>
+            <Link to={"/bid"} className="nav-link">Get random banner</Link>
           </Nav>
         </Navbar>
     );
