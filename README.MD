@@ -1,5 +1,9 @@
 ## BannerManager
 
+Spring Boot application for managing advertising banners.
+Each banner has a category.
+Categories and banners can be added/removed.
+
 ### Requirements
 
 JRE: 8 or higher
