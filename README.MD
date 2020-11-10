@@ -1,8 +1,9 @@
 ## BannerManager
 
 Spring Boot application for managing advertising banners.
-Each banner has a category.
-Categories and banners can be added/removed.
+Web application for managing advertising banners and categories.
+Banners and categories can be created, edited and deleted.
+The selection of the banner occurs through a standard HTTP request, with the category specified in the request parameters.
 
 ### Requirements
 
@@ -11,6 +12,8 @@ JRE: 8 or higher
 MAVEN: preferably latest version
 
 MySQL-server: preferably latest version
+
+There should be at least 3 tables in total: category, banner, requests.
 
 ### Installation
 
